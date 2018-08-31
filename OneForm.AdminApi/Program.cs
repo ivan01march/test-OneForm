@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace OneForm.IdentityApi
+namespace OneForm.AdminApi
 {
     public class Program
     {
