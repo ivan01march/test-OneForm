@@ -5,11 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="wwwroot\"/>
+        <PackageReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.App"/>
+      <ProjectReference Include="..\OneForm.CommonLogic\OneForm.CommonLogic.csproj" />
+      <ProjectReference Include="..\OneForm.SharedApi\OneForm.SharedApi.csproj" />
     </ItemGroup>
 
 </Project>

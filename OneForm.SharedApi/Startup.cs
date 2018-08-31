@@ -5,10 +5,12 @@ using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NSwag.AspNetCore;
+using OneForm.SharedData;
 using Serilog;
 
 namespace OneForm.SharedApi
@@ -30,7 +32,6 @@ namespace OneForm.SharedApi
         }
 
         public IConfiguration Configuration { get; }
-        private bool _withAuth = false;
 
         protected IServiceProvider ConfigureServices<TAutofacModule>(
             IServiceCollection services,
@@ -49,12 +50,12 @@ namespace OneForm.SharedApi
             ServiceLifetime? dbContextLifeTime = null
         )
         {
-//            if (dbContextLifeTime != null)
-//            {
-//                var connectionStr = Configuration.GetConnectionString("DefaultConnection");
-//                services.AddDbContext<TemeContext>(
-//                    options => options.UseSqlServer(connectionStr), dbContextLifeTime.Value);
-//            }
+            if (dbContextLifeTime != null)
+            {
+                var connectionStr = Configuration.GetConnectionString("DefaultConnection");
+                services.AddDbContext<OneFormContext>(
+                    options => options.UseSqlServer(connectionStr), dbContextLifeTime.Value);
+            }
 
             services.AddCors();
             services.AddMvc();

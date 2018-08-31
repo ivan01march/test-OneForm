@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using OneForm.SharedData.Entities;
 
-namespace EntityFrameworkProvider
+namespace OneForm.SharedData
 {
     public class OneFormContext : DbContext
     {
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<User> Users { get; set; }
+
         public OneFormContext()
         {
         }

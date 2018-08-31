@@ -1,20 +1,13 @@
-using OneForm.SharedData.Context;
-
 namespace OneForm.SharedData.Entities
 {
     /// <summary>
-    /// Страта
+    /// Страна
     /// </summary>
     public class Country : BaseEntity
     {
         /// <summary>
-        /// Наименование на русском
+        /// Наименование
         /// </summary>
-        public string NameRu { get; set; }
-
-        /// <summary>
-        /// Наименование на английском
-        /// </summary>
-        public string NameEn { get; set; }
+        public string Name { get; set; }
     }
 }

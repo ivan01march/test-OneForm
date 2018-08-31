@@ -2,60 +2,48 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using OneForm.SharedData.Context;
 using OneForm.SharedData.Entities;
-using OneForm.SharedData.RepoInterfaces;
 
-namespace EntityFrameworkProvider.Repos
+namespace OneForm.SharedData.Repos
 {
-    public class BaseRepo<TEntity> : IRepo<TEntity>
+    public class BaseRepo<TEntity> : IBaseRepo<TEntity>
         where TEntity : BaseEntity
     {
-        private readonly OneFormContext _context;
-        protected readonly DbSet<TEntity> _repo;
+        protected readonly OneFormContext Context;
+        protected readonly DbSet<TEntity> Repo;
 
         public BaseRepo(OneFormContext context)
         {
-            _context = context;
-            _repo = context.Set<TEntity>();
+            Context = context;
+            Repo = context.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> GetList<TKey>(
-            Expression<Func<TEntity, bool>> filter,
-            Expression<Func<TEntity, TKey>> sort, bool isDescending,
-            int page, int limit)
+        public async Task<TEntity> GetById(int id)
         {
-            var query = _repo
-                .Where(filter);
-            query = isDescending ? query.OrderByDescending(sort) : query.OrderBy(sort);
-            return await query.ToListAsync();
-        }
-
-        public async Task<IEnumerable<TDto>> GetList<TDto, TKey>(
-            Expression<Func<TEntity, bool>> filter,
-            Expression<Func<TEntity, TKey>> sort, bool isDescending,
-            int page, int limit) where TDto : IDto<TEntity>, new()
-        {
-            var query = _repo
-                .Where(filter);
-            query = isDescending ? query.OrderByDescending(sort) : query.OrderBy(sort);
-            return await query
-                .Select(x => (TDto) new TDto().FromEntity(x))
-                .ToListAsync();
+            return await Repo.FindAsync(id);
         }
 
         public async Task Add(TEntity entity)
         {
-            await _repo.AddAsync(entity);
+            entity.CreatedDate = DateTime.Now;
+            entity.UpdatedDate = DateTime.Now;
+            await Repo.AddAsync(entity);
+            await Context.SaveChangesAsync();
         }
 
         public async Task Update(TEntity entity)
         {
-            _repo.Update(entity);
+            entity.UpdatedDate = DateTime.Now;
+            Repo.Update(entity);
+            await Context.SaveChangesAsync();
+        }
+
+        public async Task Remove(TEntity entity)
+        {
+            Repo.Remove(entity);
+            await Context.SaveChangesAsync();
         }
     }
 }

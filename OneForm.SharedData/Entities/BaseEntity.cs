@@ -1,6 +1,6 @@
 using System;
 
-namespace OneForm.SharedData.Context
+namespace OneForm.SharedData.Entities
 {
     public class BaseEntity
     {

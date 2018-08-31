@@ -5,7 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="RepoInterfaces" />
+      <ProjectReference Include="..\OneForm.CommonData\OneForm.CommonData.csproj" />
+      <ProjectReference Include="..\OneForm.SharedLogic\OneForm.SharedLogic.csproj" />
     </ItemGroup>
 
 </Project>

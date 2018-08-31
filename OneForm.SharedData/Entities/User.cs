@@ -1,5 +1,5 @@
 using System;
-using OneForm.SharedData.Context;
+using System.ComponentModel.DataAnnotations.Schema;
 using OneForm.SharedData.Primitives;
 
 namespace OneForm.SharedData.Entities
@@ -19,7 +19,7 @@ namespace OneForm.SharedData.Entities
         /// <summary>
         /// Полное имя
         /// </summary>
-        public string FullName { get; set; }
+        public virtual string FullName => $"{FirstName} {LastName}";
 
         /// <summary>
         /// Дата рождения
@@ -36,9 +36,12 @@ namespace OneForm.SharedData.Entities
         /// </summary>
         public bool HasVehicle { get; set; }
 
+        public int CountryId { get; set; }
+
         /// <summary>
         /// Страна
         /// </summary>
-        public Country Country { get; set; }
+        [ForeignKey("CountryId")]
+        public virtual Country Country { get; set; }
     }
 }

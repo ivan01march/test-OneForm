@@ -1,8 +1,6 @@
-﻿using System;
-
 namespace OneForm.SharedLogic
 {
-    public class Class1
+    public interface IBaseLogic
     {
     }
 }
